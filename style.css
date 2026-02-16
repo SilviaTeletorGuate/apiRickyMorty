@@ -2,6 +2,27 @@
     padding: 0;
     margin: 0;
 }
+.navegador{
+    background-color: lightblue;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+ 
+#searchInput, #searchCharacters{
+    height: 40px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    background-color: bisque;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+     cursor: pointer;
+}
+
+
 #listContainer {
     display: flex;
     flex-wrap: wrap;

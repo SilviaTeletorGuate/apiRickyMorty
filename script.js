@@ -22,26 +22,60 @@ const getData = async () => {
 };
 getData()*/
 
+const searchEntrada = document.getElementById("searchInput")
+const button = document.getElementById("searchCharacters")
 const listContainer = document.getElementById("listContainer")
-const getData = async () => {
+
+const getData = async (name = "") => {
   try{
-    const response = await fetch("https://rickandmortyapi.com/api/character");
+    const url = name 
+    ? `https://rickandmortyapi.com/api/character/?name=${name}`
+      : "https://rickandmortyapi.com/api/character";
+      const response = await fetch(url);
+      if (!response.ok) {
+        if (name !== "") {
+       listContainer.innerHTML = "<p>No se encontraron personajes</p>"; 
+       setTimeout(() => getData(), 2000);
+        return;
+      } else {
+        throw new Error("Error al cargar personajes");
+      }
+      }
     const data = await response.json();
     console.log(data)
-    listContainer.innerHTML = data.results.map((item) => {
-      return (
-        `<div class="characters>
+
+    if (data.results) {
+    listContainer.innerHTML = data.results.map((item) =>
+        `<div class="characters">
       <img src=${item.image} />
       <p>${item.name}</p>
       <p>${item.status}</p>
       <p>${item.species}</p>
       <p>${item.gender}</p>
       </div>`
-      )
-      
-    })
+      ).join("");
+    } else {
+      listContainer.innerHTML = "<p>No se encontraron personajes</p>";
+    }
   } catch (error) {
     console.error(error)
+    listContainer.innerHTML ="<p>Error al buscar personaje</p>";
   }
 };
+  
+    
+      
+
+    
+
+ button.addEventListener("click", () => {
+  getData(searchInput.value.trim());
+ });
+
+ searchEntrada.addEventListener("keydown", (event) => {
+if (event.key === "Enter") {
+  getData(searchEntrada.value.trim());
+}
+ });
+
 getData()
